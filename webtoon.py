@@ -15,3 +15,4 @@ data1_list=soup.findAll('div',{'class':'col_inner'})
 data2=data1.findAll('a',{'class':'title'})
 pprint(data2)
 print(data1)
+#이번에는 어떤 수정을 해 볼까나 재미있네

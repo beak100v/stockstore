@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+              integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+              crossorigin="anonymous">
+
+        <title>stocks store page-one</title>
+        <style>
+            .form-control {
+                text: 2px
+            }
+
+
+        </style>
+
+
+        <script type="text/javascript">
+
+            $(document).ready(function () {
+                $("#stock_rank").html("");
+                stock_post();
+            });
+
+            function stock_post() {
+                $('#stock_rank').empty()
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/list',
+                    data: {},
+                    success: function (response) {
+                        let stocks = response['stocks_list'];
+                        console.log(stocks.length)
+
+                        for (let i = 0; i < stocks.length; i++) {
+                            let stock = stocks[i]
+                            let name = stock['name']
+                            let price = stock['price']
+                            let total = stock['total']
+
+                            let tempHtml = `<tr>
+                                                <th scope="row">${i + 1}</th>
+                                                <td>${name}</td>
+                                                <td>''</td>
+                                                <td>${price}</td>
+                                                <td>${total}</td>
+                                                <td>''</td>
+                                                <td>''</td>
+                                                <td>''</td>
+                                                <td>''</td>
+<!--                                                <td>-->
+<!--                                                    <button type="button" class="btn btn-primary btn-sm">저장</button>-->
+<!--                                                </td>-->
+                                            </tr>`
+                            $('#stock_rank').append(tempHtml)
+
+                        }
+
+
+                    }
+                });
+            }
+            function search_stock() {
+
+                let stock_f_name = $('#stock_name').val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/list',
+                    data: {},
+                    success: function (response) {
+                        $('#stock_rank').empty()
+                        let stocks = response['stocks_list'];
+                        console.log(stocks.length)
+                        for (let i = 0; i < stocks.length; i++) {
+                            let stock = stocks[i]
+                            let name = stock['name']
+                            // if (name == stock_f_name) {
+                            if (name.includes(stock_f_name)) {
+                                let price = stock['price']
+                                let total = stock['total']
+                                let tempHtml = `<tr>
+                                                    <th scope="row">${i + 1}</th>
+                                                    <td>${name}</td>
+                                                    <td><input type="text" class="form-control" placeholder="Text input"></td>
+                                                    <td>${price}</td>
+                                                    <td>${total}</td>
+                                                    <td><textarea class="form-control" aria-label="With textarea"></textarea></td>
+                                                    <td><textarea class="form-control" aria-label="With textarea"></textarea></td>
+                                                    <td><textarea class="form-control" aria-label="With textarea"></textarea></td>
+                                                    <td><textarea class="form-control" aria-label="With textarea"></textarea></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-primary btn-sm">저장</button>
+                                                    </td>
+                                                </tr>`
+                                $('#stock_rank').append(tempHtml)
+                            }
+
+                        }
+                    }
+                })
+            }
+
+
+        </script>
+
+
+    </head>
+
+    <body>
+        <div>
+            <button type="button" class="btn btn-success">종목저장</button>
+<!--            onClick="location.href='PAGENAME.html'"-->
+            <button type="button" class="btn btn-warning" onClick="location.href='page_two'">종목찾기</button>
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">종목명</span>
+            </div>
+            <input type="text" class="form-control" placeholder="종목명을 입력" aria-label="종목명을 입력"
+                     id="stock_name"  aria-describedby="basic-addon1" onchange="search_stock()">
+        </div>
+
+        <div>
+
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">종목명</th>
+                    <th scope="col">섹터</th>
+                    <th scope="col">현재가</th>
+                    <th scope="col">시가총액</th>
+                    <th scope="col">종목발굴장소</th>
+                    <th scope="col">관련싸이트</th>
+                    <th scope="col">종목장점</th>
+                    <th scope="col">종목단점</th>
+                </tr>
+                </thead>
+
+                <tbody id="stock_rank">
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>''</td>
+                    <td>@mdo</td>
+                    <td>@mdo</td>
+                    <td>''</td>
+                    <td>''</td>
+                    <td>''</td>
+                    <td>''</td>
+                    <td>
+                        <button type="button" class="btn btn-primary btn-sm">저장</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+    </body>
+</html>

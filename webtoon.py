@@ -14,3 +14,4 @@ data1_list=soup.findAll('div',{'class':'col_inner'})
 #제목 포함영역 추출하기
 data2=data1.findAll('a',{'class':'title'})
 pprint(data2)
+print(data1)

@@ -61,3 +61,4 @@ def show_stocks():
 if __name__ == '__main__':
     app.run('0.0.0.0', port=12345, debug=True)
 
+#이 파일도 수정이 될가 테스트

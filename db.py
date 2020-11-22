@@ -27,3 +27,5 @@ for stock in stocks:
             'total': total
         }
         db.stocks.insert_one(doc)
+#이건 이제 필요 없는 파일인가
+

@@ -29,3 +29,4 @@ for stock in stocks:
         db.stocks.insert_one(doc)
 #이건 이제 필요 없는 파일인가
 
+#23dlf 두번째 테스느
